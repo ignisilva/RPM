@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
-import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -35,7 +34,7 @@ import { AppService } from './app.service';
         database: configService.get('DB_NAME'),
         synchronize: configService.get('NODE_ENV') !== 'prod',
         logging: configService.get('NODE_ENV') !== 'prod',
-        entities: [join(__dirname, '/**/*.entity.ts')],
+        entities: ['dist/**/*.entity{.ts,.js}'],
         // migrations
       }),
     }),
