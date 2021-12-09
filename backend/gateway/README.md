@@ -1,73 +1,101 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# gateway 개발일지
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## dotenv 적용
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- $ npm install --save @nest/config
 
-## Description
+- $ npm install --save joi
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- $ npm install --save-dev cross-env
 
-## Installation
+## RDBMS (postgresql) 연결
 
-```bash
-$ npm install
-```
+<br>
 
-## Running the app
+### 1)Postgres 설정
 
-```bash
-# development
-$ npm run start
+<br>
 
-# watch mode
-$ npm run start:dev
+postgresql 실행
 
-# production mode
-$ npm run start:prod
-```
+> $ psql -U ROOTID
 
-## Test
+<br>
 
-```bash
-# unit tests
-$ npm run test
+#### 로컬 및 UFT-8 설정
 
-# e2e tests
-$ npm run test:e2e
+<br>
 
-# test coverage
-$ npm run test:cov
-```
+서버 utf-8 확인
 
-## Support
+> $ show server_encoding
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+서버 utf-8 설정
 
-## Stay in touch
+> $ set server_encoding = "UTF-8"
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+클라 utf-8 확인
 
-## License
+> $ show client_encoding
 
-Nest is [MIT licensed](LICENSE).
+클라 utf-8 설정
+
+> $ set client_encoding = "UTF-8"
+
+local 시간 확인
+
+> $ show timezone;
+
+local 시간 변경
+
+> $ set time zome 'Asia/Seoul';
+
+<br>
+
+#### DB 생성
+
+<br>
+
+DB 목록 조회
+
+> \list or \l
+
+DB 생성
+
+> create database DB_NAME;
+
+DB 선택(연결)
+
+> \connect DB_NAME or \c DB_NAME
+
+<br>
+
+#### 유저 생성 및 권한 인가
+
+<br>
+
+현재 사용자 조회
+
+> select current_user;
+
+모든 사용자 조회
+
+> \du or \du+
+
+유저 생성
+
+> create user USER_NAME password 'USER_PASSWORD';
+
+유저 비밀번호 변경
+
+> alter user USER_NAME with password 'NEW_PASSWORD';
+
+사용자 권한 인가
+
+> grant all privileges on database DB_NAME to USER_NAME;
+
+### 2) TypeORM 설정
+
+Typeorm 관련 설치
+
+> $ npm install --save @nestjs/typeorm typeorm mysql2
